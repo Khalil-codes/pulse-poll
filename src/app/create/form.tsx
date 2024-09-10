@@ -29,7 +29,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { createPoll } from "./actions";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const schema = z.object({
   options: z
@@ -52,6 +52,7 @@ const schema = z.object({
 export type FormSchema = z.infer<typeof schema>;
 
 const PollCreationForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -62,31 +63,20 @@ const PollCreationForm = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    setError,
-    clearErrors,
-    control,
-    formState: { isSubmitting },
-  } = form;
+  const { handleSubmit, setError, clearErrors, control } = form;
 
   const onSubmit: SubmitHandler<FormSchema> = async (data) => {
-    try {
-      await createPoll(data);
-
-      clearErrors();
-      form.reset();
-
-      toast({
-        description: "Poll created successfully",
-        color: "green",
-      });
-    } catch (error) {
-      toast({
-        description: "Something went wrong. Please try again",
-        variant: "destructive",
-      });
-    }
+    setIsSubmitting(true);
+    toast.promise(async () => await createPoll(data), {
+      loading: "Creating poll...",
+      success: () => {
+        form.reset();
+        clearErrors();
+        return "Poll created successfully";
+      },
+      error: "Something went wrong. Please try again",
+      finally: () => setIsSubmitting(false),
+    });
   };
 
   return (

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/footer";
 
 const geistSans = localFont({
@@ -35,8 +35,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Header />
           <main className="flex flex-1 flex-col pr-2 md:p-0">{children}</main>
+          <Toaster richColors invert />
           <Footer />
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>
