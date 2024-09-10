@@ -7,4 +7,9 @@ export type Vote = Database["public"]["Tables"]["votes"]["Row"];
 
 export type PollOptions = Database["public"]["Tables"]["poll_options"]["Row"];
 
-export type User = UserType;
+export type User = Database["public"]["Tables"]["users"]["Row"];
+
+export type PollWithUser = Poll & {
+  total_votes: { count: number }[];
+  user: Pick<User, "avatar_url" | "id" | "name"> | null;
+};

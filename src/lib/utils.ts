@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const getURL = (path: string = "") => {
@@ -18,3 +18,5 @@ export const getURL = (path: string = "") => {
   return path ? `${url}/${path}` : url;
 };
 
+export const getRandomElement = <T>(arr: T[]) =>
+  arr[Math.floor(Math.random() * arr.length)];
