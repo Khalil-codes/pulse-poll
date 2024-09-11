@@ -22,21 +22,35 @@ export const getPollIds = async () => {
 export const getPollById = async (id: string) => {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return null;
+  }
+
   const { data, error } = await supabase
     .from("poll")
     .select(
-      "*, options:poll_options(option, id, count:votes(id.count())), total_votes:votes(id.count()), user:users(id, name, avatar_url)"
+      "*, options:poll_options(option, id, poll_id, votes:votes(id.count())), total_votes:votes(id.count()), user:users(id, name, avatar_url)"
     )
     .eq("id", id)
+    .single();
+
+  const { data: voteCasted } = await supabase
+    .from("votes")
+    .select("id, option_id")
+    .eq("poll_id", id)
+    .eq("user_id", user.id)
+    .limit(1)
     .single();
 
   if (error) {
     throw new Error(error.message);
   }
 
-  console.log(JSON.stringify(data, null, 2));
-
-  return { ...data };
+  return { ...data, voteCasted };
 };
 
 export const getPolls = async () => {
