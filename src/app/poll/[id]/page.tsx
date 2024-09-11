@@ -14,8 +14,6 @@ type Props = {
   };
 };
 
-export const dynamic = "auto";
-
 const PollPage = async ({ params }: Props) => {
   const { id } = params;
 

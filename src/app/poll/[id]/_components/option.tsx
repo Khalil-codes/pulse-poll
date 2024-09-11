@@ -1,10 +1,11 @@
 "use client";
 
 import { rings } from "@/lib/constants";
-import { createClient } from "@/lib/supabase/client";
 import { cn, getRandomElement } from "@/lib/utils";
 import { CircleCheck } from "lucide-react";
 import React, { useMemo } from "react";
+import { castVote } from "../actions";
+import { toast } from "sonner";
 
 export type OptionType = {
   id: string;
@@ -16,14 +17,16 @@ export type OptionType = {
 type Props = {
   option: OptionType;
   total: number;
+  expired: boolean;
   voteCastedFor: { id: string; option_id: string } | null;
 };
 
-const Option = ({ option, total, voteCastedFor }: Props) => {
+const Option = ({ option, total, voteCastedFor, expired }: Props) => {
   const { backgroundColor, ringColor } = getRandomElement(rings);
 
   const count = useMemo(
-    () => +((option.votes[0].count / total) * 100).toFixed(2),
+    () =>
+      total > 0 ? +((option.votes[0].count / total) * 100).toFixed(2) : "0",
     [option, total]
   );
 
@@ -32,68 +35,57 @@ const Option = ({ option, total, voteCastedFor }: Props) => {
     [voteCastedFor, option]
   );
 
-  const castVote = async () => {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-
-    if (hasAlreadyCasted) return;
-
-    const { error } = await supabase
-      .from("votes")
-      .insert({
-        poll_id: option.poll_id,
-        user_id: user.id,
-        option_id: option.id,
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.log(error);
-      return;
-    }
+  const formAction = async () => {
+    toast.promise(castVote.bind(null, option), {
+      loading: "Voting...",
+      success: "Voted!",
+      error: "Error",
+      position: "top-center",
+    });
   };
 
   return (
-    <div className="group relative h-full w-full" onClick={castVote}>
-      <div
-        className={cn(
-          "flex min-h-20 cursor-pointer items-center justify-between gap-3 rounded-md border bg-slate-50 p-5 transition-all group-hover:translate-x-3 group-hover:translate-y-3 dark:border-zinc-600 dark:bg-zinc-800",
-          {
-            "translate-x-3 translate-y-3 cursor-not-allowed":
-              !!voteCastedFor?.id,
-          }
-        )}>
-        <div>
-          <p>{option.option}</p>
-          <p className="text-xs">{option.votes[0].count} votes</p>
+    <form action={formAction}>
+      <button
+        className="group relative h-full w-full"
+        type="submit"
+        disabled={expired}>
+        <div
+          className={cn(
+            "flex min-h-20 cursor-pointer items-center justify-between gap-3 rounded-md border bg-slate-50 p-5 transition-all group-hover:translate-x-3 group-hover:translate-y-3 dark:border-zinc-600 dark:bg-zinc-800",
+            {
+              "translate-x-3 translate-y-3 cursor-not-allowed":
+                !!voteCastedFor?.id || expired,
+            }
+          )}>
+          <div>
+            <p>{option.option}</p>
+            <p className="text-xs">{option.votes[0].count} votes</p>
+          </div>
+          {hasAlreadyCasted && <CircleCheck size={24} />}
         </div>
-        {hasAlreadyCasted && <CircleCheck size={24} />}
-      </div>
-      <div
-        className={cn(
-          "absolute inset-0 left-0 rounded-l-md transition-all group-hover:translate-x-3 group-hover:translate-y-3",
-          {
-            "rounded-md": count === 100,
-            "translate-x-3 translate-y-3 cursor-not-allowed":
-              !!voteCastedFor?.id,
+        <div
+          className={cn(
+            "absolute inset-0 left-0 rounded-l-md transition-all group-hover:translate-x-3 group-hover:translate-y-3",
+            {
+              "rounded-md": count === 100,
+              "translate-x-3 translate-y-3 cursor-not-allowed":
+                !!voteCastedFor?.id,
+            }
+          )}
+          style={{ width: `${count}%`, backgroundColor }}
+        />
+        <div
+          className={`absolute right-0 top-0 -z-10 h-full w-full translate-x-3 translate-y-3 rounded-md ring-1`}
+          style={
+            {
+              "--tw-ring-color": ringColor,
+              backgroundColor: backgroundColor,
+            } as React.CSSProperties
           }
-        )}
-        style={{ width: `${count}%`, backgroundColor }}
-      />
-      <div
-        className={`absolute right-0 top-0 -z-10 h-full w-full translate-x-3 translate-y-3 rounded-md ring-1`}
-        style={
-          {
-            "--tw-ring-color": ringColor,
-            backgroundColor: backgroundColor,
-          } as React.CSSProperties
-        }
-      />
-    </div>
+        />
+      </button>
+    </form>
   );
 };
 

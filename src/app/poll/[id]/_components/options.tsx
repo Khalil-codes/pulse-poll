@@ -6,11 +6,17 @@ import { createClient } from "@/lib/supabase/client";
 
 type Props = {
   id: string;
+  expired: boolean;
   options: OptionType[];
   voteCasted: { id: string; option_id: string } | null;
 };
 
-const PollOptions = ({ options: initalOptions, id, voteCasted }: Props) => {
+const PollOptions = ({
+  options: initalOptions,
+  id,
+  voteCasted,
+  expired,
+}: Props) => {
   const [options, setOptions] = useState(initalOptions);
   const supabase = createClient();
   const totalVotes = useMemo(
@@ -61,6 +67,7 @@ const PollOptions = ({ options: initalOptions, id, voteCasted }: Props) => {
             option={option}
             total={totalVotes}
             voteCastedFor={voteCasted}
+            expired={!!voteCasted || expired}
           />
         </div>
       ))}
