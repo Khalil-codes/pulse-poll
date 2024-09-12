@@ -6,6 +6,7 @@ import { isAfter } from "date-fns";
 import { getUser } from "@/lib/supabase/user";
 import AuthComponent from "./auth-component";
 import Presence from "./presence";
+import VoteLog from "./vote-log";
 
 type Props = {
   id: string;
@@ -34,6 +35,7 @@ const VoteWrapper = async (props: Props) => {
         voteCasted={voteCasted}
         expired={isAfter(new Date(), new Date(ends_at))}
       />
+      <VoteLog id={props.id} />
     </div>
   );
 };

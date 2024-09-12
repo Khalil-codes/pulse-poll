@@ -53,6 +53,25 @@ export const getPollById = async (id: string) => {
   return { ...data, voteCasted };
 };
 
+export const getLatestVotesByPollId = async (id: string, limit = 5) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("votes")
+    .select(
+      "id, user:users(id, name), created_at, option:poll_options(text:option)"
+    )
+    .eq("poll_id", id)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data;
+};
+
 export const getPolls = async () => {
   const supabase = createClient();
 
