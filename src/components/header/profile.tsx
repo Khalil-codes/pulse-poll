@@ -13,11 +13,10 @@ import { LockIcon, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/app/auth/actions";
 import { useTransition } from "react";
-import { User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 
-export default function Profile({ user }: { user: User | null }) {
+export default function Profile({ user }: { user: User }) {
   const [isPending, startTransition] = useTransition();
-  if (!user) return null;
 
   const handleLogout = async () => {
     startTransition(() => {
