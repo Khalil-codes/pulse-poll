@@ -25,8 +25,7 @@ const Option = ({ option, total, voteCastedFor, expired }: Props) => {
   const { backgroundColor, ringColor } = getRandomElement(rings);
 
   const count = useMemo(
-    () =>
-      total > 0 ? +((option.votes[0].count / total) * 100).toFixed(2) : "0",
+    () => (total > 0 ? +((option.votes[0].count / total) * 100).toFixed(2) : 0),
     [option, total]
   );
 
@@ -41,7 +40,7 @@ const Option = ({ option, total, voteCastedFor, expired }: Props) => {
       loading: "Voting...",
       success: "Voted!",
       error: "Error",
-      position: "top-center",
+      position: "bottom-left",
     });
   };
 
@@ -53,31 +52,35 @@ const Option = ({ option, total, voteCastedFor, expired }: Props) => {
         disabled={expired}>
         <div
           className={cn(
-            "flex min-h-20 cursor-pointer items-center justify-between gap-3 rounded-md border bg-slate-50 p-5 transition-all group-hover:translate-x-3 group-hover:translate-y-3 dark:border-zinc-600 dark:bg-zinc-800",
+            "flex min-h-20 cursor-pointer items-center justify-between gap-3 rounded-md border bg-slate-50 p-5 transition-all dark:border-zinc-600 dark:bg-zinc-800",
             {
-              "translate-x-3 translate-y-3 cursor-not-allowed":
-                !!voteCastedFor?.id || expired,
+              "group-hover:translate-x-3 group-hover:translate-y-3": !expired,
+              "cursor-not-allowed": expired || hasAlreadyCasted,
             }
           )}>
           <div>
             <p>{option.option}</p>
-            <p className="text-xs">{option.votes[0].count} votes</p>
+            <p className="w-fit text-xs text-gray-600 dark:text-gray-300">
+              {option.votes[0].count} votes
+            </p>
           </div>
           {hasAlreadyCasted && <CircleCheck size={24} />}
         </div>
         <div
-          className={cn(
-            "absolute inset-0 left-0 rounded-l-md transition-all group-hover:translate-x-3 group-hover:translate-y-3",
-            {
-              "rounded-md": count === 100,
-              "translate-x-3 translate-y-3 cursor-not-allowed":
-                !!voteCastedFor?.id || expired,
-            }
-          )}
+          className={cn("absolute inset-0 left-0 rounded-l-md transition-all", {
+            "rounded-md": count === 100,
+            "group-hover:translate-x-3 group-hover:translate-y-3": !expired,
+            "cursor-not-allowed": expired || hasAlreadyCasted,
+          })}
           style={{ width: `${count}%`, backgroundColor }}
         />
         <div
-          className={`absolute right-0 top-0 -z-10 h-full w-full translate-x-3 translate-y-3 rounded-md ring-1`}
+          className={cn(
+            `absolute right-0 top-0 -z-10 h-full w-full rounded-md ring-1`,
+            {
+              "translate-x-3 translate-y-3": !expired,
+            }
+          )}
           style={
             {
               "--tw-ring-color": ringColor,
