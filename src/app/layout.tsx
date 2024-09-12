@@ -18,9 +18,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Pulse Poll",
+  title: "PulseVote | Vote on the go",
   description:
-    "Engage your audience instantly with PulsePoll, a real-time polling app that allows users to cast and view votes in seconds. Create dynamic polls on the go and watch live results unfold seamlessly.",
+    "Engage your audience instantly with PulseVote , a real-time polling app that allows users to cast and view votes in seconds. Create dynamic polls on the go and watch live results unfold seamlessly.",
 };
 
 export default function RootLayout({

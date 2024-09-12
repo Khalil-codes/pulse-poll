@@ -9,7 +9,7 @@ import OAuth from "./oauth";
 export function generateMetadata({ searchParams }: Props): Metadata {
   const { screen = "login" } = searchParams;
   return {
-    title: `${screen === "login" ? "Login" : "Signup"} | PulsePoll`,
+    title: `${screen === "login" ? "Login" : "Signup"} | PulseVote`,
   };
 }
 
