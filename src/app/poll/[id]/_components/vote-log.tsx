@@ -1,3 +1,4 @@
+import { toLocalDate } from "@/lib/helpers";
 import { getUser } from "@/lib/supabase/user";
 import { getLatestVotesByPollId } from "@/services/polls";
 import { formatRelative } from "date-fns";
@@ -35,7 +36,10 @@ const VoteLog = async ({ id }: Props) => {
                 <span className="font-bold text-yellow-600 dark:text-yellow-500">
                   {vote.option?.text}
                 </span>{" "}
-                {formatRelative(new Date(vote.created_at), new Date())}
+                {formatRelative(
+                  toLocalDate(new Date(vote.created_at)),
+                  toLocalDate(new Date())
+                )}
               </p>
             </div>
           ))}

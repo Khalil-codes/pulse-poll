@@ -1,3 +1,5 @@
+"use client";
+
 import { rings } from "@/lib/constants";
 import { PollWithUser } from "@/lib/types";
 import React from "react";
