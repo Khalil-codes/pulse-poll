@@ -1,7 +1,6 @@
-import { toLocalDate } from "@/lib/helpers";
+import RelativeTime from "@/components/relative-time";
 import { getUser } from "@/lib/supabase/user";
 import { getLatestVotesByPollId } from "@/services/polls";
-import { formatRelative } from "date-fns";
 import { InfoIcon } from "lucide-react";
 import React from "react";
 
@@ -36,10 +35,7 @@ const VoteLog = async ({ id }: Props) => {
                 <span className="font-bold text-yellow-600 dark:text-yellow-500">
                   {vote.option?.text}
                 </span>{" "}
-                {formatRelative(
-                  toLocalDate(new Date(vote.created_at)),
-                  toLocalDate(new Date())
-                )}
+                <RelativeTime date={vote.created_at} />
               </p>
             </div>
           ))}

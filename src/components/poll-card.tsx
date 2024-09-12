@@ -1,12 +1,11 @@
-"use client";
-
 import { rings } from "@/lib/constants";
 import { PollWithUser } from "@/lib/types";
 import React from "react";
 import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { getRandomElement } from "@/lib/utils";
-import { formatRelative, isBefore } from "date-fns";
+import { isBefore } from "date-fns";
+import RelativeTime from "./relative-time";
 
 type Props = {
   poll: PollWithUser;
@@ -48,7 +47,7 @@ const PollCard = ({ poll }: Props) => {
             <Badge>Expired</Badge>
           ) : (
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Expires {formatRelative(new Date(ends_at), new Date())}
+              Expires <RelativeTime date={ends_at} />
             </p>
           )}
         </div>
