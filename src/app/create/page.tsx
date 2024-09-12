@@ -1,7 +1,7 @@
 import React from "react";
 import PollCreationForm from "./form";
 
-export const dynamic = "force-static";
+export const dynamic = "auto";
 
 const CreatePoll = () => {
   return (
