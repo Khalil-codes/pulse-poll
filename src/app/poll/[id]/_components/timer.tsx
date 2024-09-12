@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Timer } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -59,7 +60,11 @@ const TimerCountDown = ({ date }: Props) => {
   }, [targetDate]);
 
   if (targetDate < new Date()) {
-    return <div>Expired</div>;
+    return (
+      <div>
+        <Badge>Expired</Badge>
+      </div>
+    );
   }
 
   return (

@@ -36,6 +36,7 @@ const Option = ({ option, total, voteCastedFor, expired }: Props) => {
   );
 
   const formAction = async () => {
+    if (expired || hasAlreadyCasted) return;
     toast.promise(castVote.bind(null, option), {
       loading: "Voting...",
       success: "Voted!",
@@ -70,7 +71,7 @@ const Option = ({ option, total, voteCastedFor, expired }: Props) => {
             {
               "rounded-md": count === 100,
               "translate-x-3 translate-y-3 cursor-not-allowed":
-                !!voteCastedFor?.id,
+                !!voteCastedFor?.id || expired,
             }
           )}
           style={{ width: `${count}%`, backgroundColor }}
