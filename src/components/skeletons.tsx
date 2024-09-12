@@ -30,3 +30,18 @@ export const OptionSkeleton = () => {
     </div>
   );
 };
+
+export const VoteWrapperSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-5">
+      <Skeleton className="mx-auto h-5 w-1/2" />
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+        {Array(2)
+          .fill(1)
+          .map((_, index) => (
+            <OptionSkeleton key={index} />
+          ))}
+      </div>
+    </div>
+  );
+};
