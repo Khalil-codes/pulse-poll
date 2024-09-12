@@ -2,6 +2,7 @@ import { getPollIds } from "@/services/polls";
 import React, { Suspense } from "react";
 import PollInfo from "./_components/poll-info";
 import VoteWrapper from "./_components/vote-wrapper";
+import { OptionSkeleton } from "@/components/skeletons";
 
 export async function generateStaticParams() {
   const polls = await getPollIds();
@@ -20,7 +21,12 @@ const PollPage = async ({ params }: Props) => {
   return (
     <section className="mt-6 flex flex-1 flex-col gap-10">
       <PollInfo id={id} />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={Array(2)
+          .fill(1)
+          .map((_, index) => (
+            <OptionSkeleton key={index} />
+          ))}>
         <VoteWrapper id={id} />
       </Suspense>
     </section>
