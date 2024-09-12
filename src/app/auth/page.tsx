@@ -13,6 +13,8 @@ export function generateMetadata({ searchParams }: Props): Metadata {
   };
 }
 
+export const dynamic = "force-static";
+
 type Props = {
   searchParams: { screen: "login" | "signup" };
 };

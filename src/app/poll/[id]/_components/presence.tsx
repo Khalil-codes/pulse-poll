@@ -11,9 +11,9 @@ export default function Presence({ id }: { id: string }) {
     const channel = supabase.channel(id);
     channel
       .on("presence", { event: "sync" }, () => {
-        let users: string[] = [];
+        const users: string[] = [];
         for (const id in channel.presenceState()) {
-          // @ts-ignore
+          // @ts-expect-error User ID is available but not typed
           const user_id = channel.presenceState()[id][0]?.user_id;
           if (user_id) {
             users.push(user_id);
@@ -34,7 +34,7 @@ export default function Presence({ id }: { id: string }) {
     return () => {
       channel.unsubscribe();
     };
-  }, []);
+  }, [id, supabase]);
 
   return (
     <div className="flex items-center justify-center gap-2 text-sm">

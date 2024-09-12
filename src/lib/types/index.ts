@@ -1,5 +1,4 @@
 import { Database } from "./schema";
-import { User as UserType } from "@supabase/auth-js";
 
 export type Poll = Database["public"]["Tables"]["poll"]["Row"];
 

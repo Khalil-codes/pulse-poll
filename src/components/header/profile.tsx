@@ -16,9 +16,8 @@ import { useTransition } from "react";
 import { User } from "@supabase/supabase-js";
 
 export default function Profile({ user }: { user: User | null }) {
-  if (!user) return null;
-
   const [isPending, startTransition] = useTransition();
+  if (!user) return null;
 
   const handleLogout = async () => {
     startTransition(() => {
