@@ -19,6 +19,22 @@ export const getPollIds = async () => {
   return data;
 };
 
+export const getPollMetadata = async (id: string) => {
+  const supabase = createClientBrowser();
+
+  const { data, error } = await supabase
+    .from("poll")
+    .select("title, description, user:users(name, avatar_url)")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) {
+    return null;
+  }
+
+  return data;
+};
+
 export const getPollById = async (id: string) => {
   const supabase = createClient();
 

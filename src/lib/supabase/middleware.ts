@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!user && request.nextUrl.pathname.startsWith("/create")) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/auth";
@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
   } else if (user && request.nextUrl.pathname.startsWith("/auth")) {
     // user, potentially respond by redirecting the user to the dashboard page
     const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
+    url.pathname = "/";
     return NextResponse.redirect(url);
   }
 

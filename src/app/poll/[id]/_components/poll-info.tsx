@@ -15,8 +15,6 @@ type Props = {
   id: string;
 };
 
-export const dynamic = "force-static";
-
 const PollInfo = async ({ id }: Props) => {
   const { backgroundColor, ringColor } = getRandomElement(rings);
 

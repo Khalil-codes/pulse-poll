@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/footer";
+import { DEFAULT_DESCRIPTION } from "@/lib/constants";
+import { getURL } from "@/lib/utils";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,9 +20,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getURL()),
   title: "PulseVote | Vote on the go",
-  description:
-    "Engage your audience instantly with PulseVote , a real-time polling app that allows users to cast and view votes in seconds. Create dynamic polls on the go and watch live results unfold seamlessly.",
+  description: DEFAULT_DESCRIPTION,
 };
 
 export default function RootLayout({

@@ -29,3 +29,6 @@ export const rings = [
     backgroundColor: "rgba(6, 182, 212, 0.4)",
   },
 ];
+
+export const DEFAULT_DESCRIPTION =
+  "Engage your audience instantly with PulseVote , a real-time polling app that allows users to cast and view votes in seconds.";
