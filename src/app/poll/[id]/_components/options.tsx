@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Option, { OptionType } from "./option";
 import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 type Props = {
   id: string;
@@ -60,9 +61,15 @@ const PollOptions = ({
   }, [id, supabase]);
 
   return (
-    <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+    <div
+      className={cn(
+        "grid min-h-60 auto-rows-max grid-cols-1 gap-10 md:grid-cols-2",
+        {
+          "gap-6": !!voteCasted || expired,
+        }
+      )}>
       {options.map((option) => (
-        <div key={option.id} className="w-full">
+        <div key={option.id}>
           <Option
             option={option}
             total={totalVotes}

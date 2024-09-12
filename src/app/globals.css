@@ -60,6 +60,16 @@
     @apply border-border;
   }
   body {
-    @apply font-geist-sans bg-background text-foreground;
+    @apply bg-background font-geist-sans text-foreground;
   }
+}
+
+body {
+  -ms-overflow-style: none;
+  /* scrollbar-width: none; */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
