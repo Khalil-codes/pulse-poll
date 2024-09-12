@@ -6,7 +6,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { User } from "@/lib/types";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +13,7 @@ import { LockIcon, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/app/auth/actions";
 import { useTransition } from "react";
+import { User } from "@supabase/supabase-js";
 
 export default function Profile({ user }: { user: User | null }) {
   if (!user) return null;
@@ -35,7 +35,7 @@ export default function Profile({ user }: { user: User | null }) {
             width={40}
             height={40}
             alt={user?.user_metadata?.user_name}
-            className="animate-fade cursor-pointer rounded-full ring ring-green-500 transition-all hover:scale-110"
+            className="cursor-pointer rounded-full ring ring-green-500 hover:scale-110"
           />
         </PopoverTrigger>
         <PopoverContent className="flex w-72 flex-col divide-y" align="end">
