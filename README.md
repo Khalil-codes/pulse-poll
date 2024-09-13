@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PulseVote
 
-## Getting Started
+![Poll Page](./images/pulse-vote.png)
 
-First, run the development server:
+## Description
+
+PulseVote is a Next.js project that allows users to create and participate in polls. The project is built using React, Next.js, Supabase and TypeScript. Engage your audience instantly with PulsePoll, a real-time polling app that allows users to cast and view votes in seconds.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
+## Installation
+
+To install the project, run the following command:
+
+```bash
+npm install
+```
+
+## Usage
+
+To start the development server, run the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the development server on `http://localhost:3000`. You can access the poll page by navigating to `http://localhost:3000/poll/[id]`, where `[id]` is the ID of the poll.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To contribute to the project, fork the repository and create a new branch. Make your changes and submit a pull request. Please make sure to follow the project's coding standards and guidelines.
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+PulseVote is licensed under the MIT License.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Acknowledgements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+PulseVote uses the following dependencies:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js
+- React
+- TypeScript
+- Supabase
+- Geist font
