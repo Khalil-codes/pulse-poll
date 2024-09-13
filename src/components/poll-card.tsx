@@ -42,11 +42,13 @@ const PollCard = ({ poll }: Props) => {
             {totalVotes} votes
           </p>
         </div>
-        <div className="mt-auto">
+        <div className="mt-auto" suppressHydrationWarning>
           {!isActive ? (
             <Badge>Expired</Badge>
           ) : (
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p
+              className="text-sm text-gray-600 dark:text-gray-400"
+              suppressHydrationWarning>
               Expires <RelativeTime date={ends_at} />
             </p>
           )}

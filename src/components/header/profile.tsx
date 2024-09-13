@@ -32,7 +32,7 @@ export default function Profile({ user }: { user: User }) {
             src={user?.user_metadata?.avatar_url}
             width={40}
             height={40}
-            alt={user?.user_metadata?.user_name}
+            alt={user?.user_metadata?.full_name || user?.email || "Profile"}
             className="cursor-pointer rounded-full ring ring-green-500 hover:scale-110"
           />
         </PopoverTrigger>
