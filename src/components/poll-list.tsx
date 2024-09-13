@@ -3,8 +3,12 @@ import Link from "next/link";
 import React from "react";
 import PollCard from "./poll-card";
 
-const PollList = async () => {
-  const polls = await getPolls();
+type Props = {
+  type: "active" | "expired";
+};
+
+const PollList = async ({ type }: Props) => {
+  const polls = await getPolls(type);
 
   if (polls.length === 0) {
     return <h1 className="text-3xl font-bold">No polls found</h1>;

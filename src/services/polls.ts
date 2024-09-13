@@ -88,13 +88,18 @@ export const getLatestVotesByPollId = async (id: string, limit = 5) => {
   return data;
 };
 
-export const getPolls = async () => {
+export const getPolls = async (type: "active" | "expired") => {
   const supabase = createClient();
 
   const { data: polls, error } = await supabase
     .from("poll")
     .select(
       "*, total_votes:votes(id.count()), user:users(id, name, avatar_url)"
+    )
+    .filter(
+      "ends_at",
+      type === "active" ? "gte" : "lt",
+      new Date().toISOString()
     )
     .order("created_at", { ascending: false });
 
@@ -107,14 +112,22 @@ export const getPolls = async () => {
 
 export const getPollsByUser = async () => {
   const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from("poll")
     .select("*")
+    .eq("created_by", user.id)
     .order("created_at", { ascending: false });
 
-  if (error) {
-    throw new Error(error.message);
+  if (error || !data) {
+    throw [];
   }
 
   return data;
