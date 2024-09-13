@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { OptionType } from "./_components/option";
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 
 export const castVote = async (option: OptionType) => {
   const supabase = createClient();
@@ -26,5 +26,5 @@ export const castVote = async (option: OptionType) => {
     throw new Error(error.message);
   }
 
-  revalidatePath(`/poll/${option.poll_id}`);
+  // revalidatePath(`/poll/${option.poll_id}`);
 };

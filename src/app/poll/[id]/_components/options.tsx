@@ -15,10 +15,11 @@ type Props = {
 const PollOptions = ({
   options: initalOptions,
   id,
-  voteCasted,
+  voteCasted: voteCastedFor,
   expired,
 }: Props) => {
   const [options, setOptions] = useState(initalOptions);
+  const [voteCasted, setVoteCasted] = useState(voteCastedFor);
   const supabase = createClient();
   const totalVotes = useMemo(
     () => options.reduce((acc, option) => acc + option.votes[0].count, 0),
@@ -36,7 +37,11 @@ const PollOptions = ({
           table: "votes",
           filter: `poll_id=eq.${id}`,
         },
-        (payload) => {
+        async (payload) => {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+
           setOptions((prev) => {
             return prev.map((option) => {
               if (option.id === payload.new.option_id) {
@@ -51,6 +56,12 @@ const PollOptions = ({
               return option;
             });
           });
+          if (payload.new.user_id === user?.id) {
+            setVoteCasted({
+              id: payload.new.id,
+              option_id: payload.new.option_id,
+            });
+          }
         }
       )
       .subscribe();
